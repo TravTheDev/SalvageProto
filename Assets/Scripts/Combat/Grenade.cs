@@ -1,12 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Health))]
-public class ExplosiveBarrel : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class Grenade : MonoBehaviour
 {
+    [Header("Fuse")]
+    [SerializeField] private float fuseTime = 2.5f;
+
     [Header("Explosion")]
-    [SerializeField] private float explosionDamage = 75f;
-    [SerializeField] private float explosionRadius = 5f;
-    [SerializeField] private float explosionForce = 150f;
+    [SerializeField] private float damage = 75f;
+    [SerializeField] private float radius = 5f;
+    [SerializeField] private float force = 150f;
     [SerializeField] private float upwardModifier = 0.5f;
 
     [Header("Collision")]
@@ -15,22 +19,18 @@ public class ExplosiveBarrel : MonoBehaviour
     [Header("Effects")]
     [SerializeField] private GameObject explosionEffect;
 
-    private Health health;
     private bool hasExploded;
 
-    private void Awake()
+    private void Start()
     {
-        health = GetComponent<Health>();
+        StartCoroutine(FuseRoutine());
     }
 
-    private void OnEnable()
+    private IEnumerator FuseRoutine()
     {
-        health.Died += Explode;
-    }
+        yield return new WaitForSeconds(fuseTime);
 
-    private void OnDisable()
-    {
-        health.Died -= Explode;
+        Explode();
     }
 
     private void Explode()
@@ -53,9 +53,9 @@ public class ExplosiveBarrel : MonoBehaviour
 
         ExplosionUtility.Explode(
             transform.position,
-            explosionDamage,
-            explosionRadius,
-            explosionForce,
+            damage,
+            radius,
+            force,
             upwardModifier,
             affectedLayers,
             gameObject
@@ -68,7 +68,7 @@ public class ExplosiveBarrel : MonoBehaviour
     {
         Gizmos.DrawWireSphere(
             transform.position,
-            explosionRadius
+            radius
         );
     }
 }

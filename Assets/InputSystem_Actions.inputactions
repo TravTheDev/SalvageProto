@@ -104,6 +104,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Grenade",
+                    "type": "Button",
+                    "id": "4955bbd9-a6b2-4286-a611-009885b518cf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -511,6 +520,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3a7343f-4f60-46d3-8ab6-bd81eff8008d",
+                    "path": "<Keyboard>/#(G)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Grenade",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
