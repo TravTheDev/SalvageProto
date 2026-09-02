@@ -4,7 +4,7 @@ Salvage Protocol is a work-in-progress first-person action prototype built with 
 
 The repository documents my ongoing development process and demonstrates how I structure gameplay systems so they remain reusable, configurable, and easier to extend.
 
-> \*\*Project status:\*\* Active development. Core gameplay systems are functional; UI, feedback, content, and visual presentation are still being refined.
+> **Project status:** Active development. Core gameplay systems are functional; UI, feedback, content, and visual presentation are still being refined.
 
 ## Current Features
 
