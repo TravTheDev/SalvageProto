@@ -146,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExplosiveBarrel
   explosionDamage: 75
   explosionRadius: 5
-  explosionForce: 800
+  explosionForce: 75
   upwardModifier: 0.5
   affectedLayers:
     serializedVersion: 2
