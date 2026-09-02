@@ -38,6 +38,8 @@ public class WaveManager : MonoBehaviour
     public event Action<int> WaveStarted;
     public event Action AllWavesCompleted;
 
+    public event Action<int> LivingEnemiesChanged;
+
     private void Start()
     {
         StartNextWave();
@@ -136,6 +138,7 @@ public class WaveManager : MonoBehaviour
         }
 
         livingEnemies++;
+        LivingEnemiesChanged?.Invoke(livingEnemies);
 
         enemyHealth.Died += HandleEnemyDied;
     }
@@ -144,6 +147,7 @@ public class WaveManager : MonoBehaviour
     {
         livingEnemies =
             Mathf.Max(livingEnemies - 1, 0);
+        LivingEnemiesChanged?.Invoke(livingEnemies);
 
         Debug.Log(
             $"Enemies remaining: {livingEnemies}"

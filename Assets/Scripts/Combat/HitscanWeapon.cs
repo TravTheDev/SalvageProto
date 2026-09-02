@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class HitscanWeapon : MonoBehaviour
 {
@@ -18,6 +19,13 @@ public class HitscanWeapon : MonoBehaviour
 
     public int CurrentAmmo => currentAmmo;
     public bool IsReloading => isReloading;
+
+    public event Action<int, int> AmmoChanged;
+
+    public int MagazineSize =>
+        weaponData != null
+            ? weaponData.MagazineSize
+            : 0;
 
     private void Awake()
     {
@@ -51,6 +59,11 @@ public class HitscanWeapon : MonoBehaviour
             Time.time + (1f / weaponData.FireRate);
 
         currentAmmo--;
+
+        AmmoChanged?.Invoke(
+            currentAmmo,
+            weaponData.MagazineSize);
+
 
         Ray ray = new Ray(
             aimCamera.transform.position,
@@ -105,6 +118,11 @@ public class HitscanWeapon : MonoBehaviour
         );
 
         currentAmmo = weaponData.MagazineSize;
+
+        AmmoChanged?.Invoke(
+            currentAmmo,
+            weaponData.MagazineSize);
+
         isReloading = false;
 
         Debug.Log("Reload complete.");

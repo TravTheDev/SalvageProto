@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerGrenadeThrower : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class PlayerGrenadeThrower : MonoBehaviour
     [Header("Inventory")]
     [SerializeField]
     private int startingGrenades = 3;
+
+    public event Action<int> GrenadeCountChanged;
 
     public int GrenadeCount { get; private set; }
 
@@ -69,6 +72,7 @@ public class PlayerGrenadeThrower : MonoBehaviour
             throwOrigin.forward * throwForce;
 
         GrenadeCount--;
+        GrenadeCountChanged?.Invoke(GrenadeCount);
 
         Debug.Log(
             $"Grenade thrown. Remaining: {GrenadeCount}"
@@ -82,6 +86,7 @@ public class PlayerGrenadeThrower : MonoBehaviour
         if (amount > 0)
         {
             GrenadeCount += amount;
+            GrenadeCountChanged?.Invoke(GrenadeCount);
         }
     }
 }
