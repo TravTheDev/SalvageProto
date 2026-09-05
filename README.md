@@ -1,6 +1,6 @@
 # Salvage Protocol
 
-**Salvage Protocol** is a wave-based FPS survival prototype built from the ground up in **Unity and C#**.
+*Salvage Protocol* is a wave-based FPS survival prototype built from the ground up in **Unity and C#**.
 
 The project focuses on modular gameplay systems, enemy AI, physics-driven interactions, environmental combat, and clean component-based architecture.
 
