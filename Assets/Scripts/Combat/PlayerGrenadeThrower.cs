@@ -74,10 +74,6 @@ public class PlayerGrenadeThrower : MonoBehaviour
         GrenadeCount--;
         GrenadeCountChanged?.Invoke(GrenadeCount);
 
-        Debug.Log(
-            $"Grenade thrown. Remaining: {GrenadeCount}"
-        );
-
         return true;
     }
 

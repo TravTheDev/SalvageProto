@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using System; 
 
 [RequireComponent(typeof(Rigidbody))]
 public class Grenade : MonoBehaviour
