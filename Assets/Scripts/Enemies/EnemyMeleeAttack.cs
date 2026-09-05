@@ -44,11 +44,6 @@ public class EnemyMeleeAttack : MonoBehaviour, IEnemyAttack
                 damage,
                 gameObject
             );
-
-            Debug.Log(
-                $"{gameObject.name} attacked " +
-                $"{target.name} for {damage} damage."
-            );
         }
     }
 }

@@ -70,10 +70,6 @@ public class WaveManager : MonoBehaviour
     {
         isSpawningWave = true;
 
-        Debug.Log(
-            $"Wave {CurrentWaveNumber} started."
-        );
-
         WaveStarted?.Invoke(CurrentWaveNumber);
 
         for (int i = 0; i < wave.enemyCount; i++)
@@ -92,16 +88,6 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (enemyPrefabs.Length == 0 ||
-            spawnPoints.Length == 0)
-        {
-            Debug.LogWarning(
-                "WaveManager is missing enemies or spawn points."
-            );
-
-            return;
-        }
-
         GameObject enemyPrefab =
             enemyPrefabs[
                 UnityEngine.Random.Range(
@@ -129,10 +115,6 @@ public class WaveManager : MonoBehaviour
 
         if (enemyHealth == null)
         {
-            Debug.LogWarning(
-                $"{enemy.name} does not have a Health component."
-            );
-
             Destroy(enemy);
             return;
         }
@@ -148,10 +130,6 @@ public class WaveManager : MonoBehaviour
         livingEnemies =
             Mathf.Max(livingEnemies - 1, 0);
         LivingEnemiesChanged?.Invoke(livingEnemies);
-
-        Debug.Log(
-            $"Enemies remaining: {livingEnemies}"
-        );
 
         CheckWaveComplete();
     }
@@ -170,10 +148,6 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator BeginNextWaveAfterDelay()
     {
-        Debug.Log(
-            $"Wave {CurrentWaveNumber} complete."
-        );
-
         yield return new WaitForSeconds(
             timeBetweenWaves
         );
@@ -184,8 +158,6 @@ public class WaveManager : MonoBehaviour
     private void CompleteAllWaves()
     {
         gameComplete = true;
-
-        Debug.Log("All waves completed!");
 
         AllWavesCompleted?.Invoke();
     }

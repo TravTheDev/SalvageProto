@@ -86,11 +86,6 @@ public class HitscanWeapon : MonoBehaviour
                     weaponData.Damage,
                     owner
                 );
-
-                Debug.Log(
-                    $"Hit {hit.transform.name} " +
-                    $"for {weaponData.Damage} damage."
-                );
             }
         }
     }
@@ -111,8 +106,6 @@ public class HitscanWeapon : MonoBehaviour
     {
         isReloading = true;
 
-        Debug.Log("Reloading...");
-
         yield return new WaitForSeconds(
             weaponData.ReloadTime
         );
@@ -124,7 +117,5 @@ public class HitscanWeapon : MonoBehaviour
             weaponData.MagazineSize);
 
         isReloading = false;
-
-        Debug.Log("Reload complete.");
     }
 }
