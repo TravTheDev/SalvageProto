@@ -20,11 +20,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text messageText;
 
+    [Header("Spawn")]
+    [SerializeField] private Transform playerSpawnPoint;
+
     private bool gameEnded;
 
     private void Awake()
     {
         Time.timeScale = 1f;
+
+        SpawnPlayer();
 
         if (endGamePanel != null)
         {
@@ -52,6 +57,32 @@ public class GameManager : MonoBehaviour
     private void HandleVictory()
     {
         EndGame(true);
+    }
+
+    private void SpawnPlayer()
+    {
+        if (playerMovement == null || playerSpawnPoint == null)
+        {
+            return;
+        }
+
+        CharacterController controller =
+            playerMovement.GetComponent<CharacterController>();
+
+        if (controller != null)
+        {
+            controller.enabled = false;
+        }
+
+        playerMovement.transform.SetPositionAndRotation(
+            playerSpawnPoint.position,
+            playerSpawnPoint.rotation
+        );
+
+        if (controller != null)
+        {
+            controller.enabled = true;
+        }
     }
 
     private void EndGame(bool victory)
