@@ -4,7 +4,7 @@
 
 The project focuses on modular gameplay systems, enemy AI, physics-driven interactions, environmental combat, and clean component-based architecture.
 
-> \*\*Status:\*\* Active Development — core gameplay is functional, with visual polish, audio, balancing, and environment art currently in progress.
+> **Status:** Active Development — core gameplay is functional, with visual polish, audio, balancing, and environment art currently in progress.
 
 ## Gameplay
 
