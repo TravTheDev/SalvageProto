@@ -1,140 +1,176 @@
 # Salvage Protocol
 
-Salvage Protocol is a work-in-progress first-person action prototype built with Unity and C#. The project focuses on modular gameplay programming: player movement and combat, reusable damage systems, enemy AI, physics-based interactions, explosive objects, and wave progression.
+**Salvage Protocol** is a wave-based FPS survival prototype built from the ground up in **Unity and C#**.
 
-The repository documents my ongoing development process and demonstrates how I structure gameplay systems so they remain reusable, configurable, and easier to extend.
+The project focuses on modular gameplay systems, enemy AI, physics-driven interactions, environmental combat, and clean component-based architecture.
 
-> **Project status:** Active development. Core gameplay systems are functional; UI, feedback, content, and visual presentation are still being refined.
+> \*\*Status:\*\* Active Development — core gameplay is functional, with visual polish, audio, balancing, and environment art currently in progress.
+
+## Gameplay
+
+Survive increasingly difficult waves of enemies while using firearms, grenades, environmental explosives, and physics-based objects to control the arena.
+
+The combat space is designed around movement, enemy pathing, choke points, environmental hazards, and multiple routes through a compact industrial salvage facility.
 
 ## Current Features
 
-### Player
-
-* First-person movement using Unity's `CharacterController`
-* Walking, sprinting, jumping, and mouse-controlled camera movement
-* Input handled through Unity's Input System
-
-### Combat
-
-* Hitscan weapon firing with configurable damage, range, fire rate, magazine size, and reload time
-* Weapon statistics stored in reusable `ScriptableObject` assets
-* Grenade throwing with a timed fuse, physics, radial damage, and explosion force
-* Shared health and damage contracts that can be used by players, enemies, and world objects
-
-### Enemies and Waves
-
-* NavMesh-based enemy movement
-* State-driven enemy behavior: idle, chase, attack, and dead
-* Interface-based enemy attacks
-* Configurable enemy waves, spawn intervals, and spawn locations
-* Events for wave starts and completion
-
-### Interaction and World Objects
-
-* Interface-driven interaction system
-* Physics objects that can be picked up, carried, dropped, and thrown
-* Damageable explosive barrels
-* Shared explosion logic that prevents objects with multiple colliders from receiving duplicate damage or force
+* First-person movement, sprinting, jumping, and camera controls
+* Hitscan firearm system
+* Magazine ammunition and reloading
+* Reusable health and damage system
+* NavMesh-based enemy navigation
+* State-based enemy AI
+* Melee enemy combat
+* Wave spawning and progression
+* Physics-based object carrying and throwing
+* Explosive environmental objects
+* Chain-reaction explosions
+* Throwable grenades
+* Shared reusable explosion system
+* Gameplay HUD
+* Player health, ammunition, grenade, wave, and enemy counters
+* Game over and victory states
+* Restart and quit flow
+* Defined player spawn system
+* Fully navigable grayboxed combat arena
 
 ## Technical Highlights
 
-* **Interface-driven systems:** `IDamageable`, `IInteractable`, `ICarryable`, and `IEnemyAttack` separate gameplay contracts from individual implementations.
-* **Component-based design:** Health, death behavior, attacks, movement, and interaction are composed from focused MonoBehaviours instead of being placed in one large controller.
-* **Reusable explosion handling:** Grenades and explosive barrels both use the same explosion utility for radial damage and physics force.
-* **Event-driven communication:** Health and wave systems expose events so other systems can react without tightly coupling their implementations.
-* **Data-driven weapons:** `WeaponData` keeps weapon tuning separate from firing behavior and allows new configurations to be created in the Unity Editor.
-* **Defensive checks:** Gameplay systems validate required references and state before performing actions.
+### Component-Based Architecture
 
-## Selected Source Files
+Gameplay functionality is separated into focused components such as player movement, combat, interaction, health, enemy behavior, and wave management.
 
-* [`Health.cs`](Assets/Scripts/Core/Health.cs) - reusable health, healing, damage, and death events
-* [`ExplosionUtility.cs`](Assets/Scripts/Core/ExplosionUtility.cs) - shared radial damage and physics-force handling
-* [`HitscanWeapon.cs`](Assets/Scripts/Combat/HitscanWeapon.cs) - firing, ammunition, timing, raycasts, and reloading
-* [`WeaponData.cs`](Assets/Scripts/Combat/WeaponData.cs) - ScriptableObject-based weapon configuration
-* [`EnemyController.cs`](Assets/Scripts/Enemies/EnemyController.cs) - NavMesh movement and enemy state transitions
-* [`WaveManager.cs`](Assets/Scripts/Waves/WaveManager.cs) - configurable wave spawning and progression
-* [`PlayerInteraction.cs`](Assets/Scripts/Interaction/PlayerInteraction.cs) - object detection, interaction, carrying, dropping, and throwing
+This keeps systems reusable and prevents large classes from taking responsibility for unrelated behavior.
+
+### Interfaces
+
+Interfaces such as `IDamageable`, `IInteractable`, `ICarryable`, and `IEnemyAttack` allow gameplay systems to communicate through shared contracts rather than depending on specific implementations.
+
+For example, weapons and explosions can damage any object implementing `IDamageable`.
+
+### Event-Driven Systems
+
+Systems such as health, ammunition, grenades, waves, and game state expose events that other components can subscribe to.
+
+The HUD responds to gameplay changes without needing to continuously poll those systems every frame.
+
+### Data-Driven Weapon Configuration
+
+Weapon statistics are stored in a `ScriptableObject`, separating weapon configuration from weapon behavior.
+
+Current configurable values include:
+
+* Damage
+* Range
+* Fire rate
+* Magazine size
+* Reload time
+
+### Enemy AI
+
+Enemies use a small finite-state machine with:
+
+* Idle
+* Chase
+* Attack
+* Dead
+
+Navigation is handled using Unity's NavMesh system, while combat behavior is separated through the `IEnemyAttack` interface.
+
+### Shared Explosion System
+
+Grenades and environmental explosives use the same reusable explosion utility.
+
+The system handles:
+
+* Area damage
+* Physics forces
+* Layer filtering
+* Multiple colliders
+* Chain reactions
+
+`HashSet` collections prevent objects with multiple colliders from receiving duplicate damage or explosion forces.
+
+### Physics Interaction
+
+The player can pick up, carry, drop, and throw physics objects.
+
+Carryable objects use an interaction interface so future interactable object types can be added without tightly coupling them to the player controller.
+
+## Controls
+
+|Action|Input|
+|-|-|
+|Move|WASD|
+|Look|Mouse|
+|Sprint|Shift|
+|Jump|Space|
+|Fire|Left Mouse Button|
+|Reload|R|
+|Interact / Pick Up|E|
+|Throw Carried Object|Q|
+|Throw Grenade|G|
 
 ## Project Structure
 
 ```text
 Assets/
-|-- Scenes/                # Playable arena scene and navigation data
-|-- Prefabs/               # Enemies, grenades, and interactive objects
-|-- ScriptableObjects/     # Weapon configuration assets
-`-- Scripts/
-    |-- Combat/            # Weapons, grenades, and combat input
-    |-- Core/              # Health, damage contracts, and shared utilities
-    |-- Enemies/           # Enemy state logic and attacks
-    |-- Interaction/       # Interactable and carryable object systems
-    |-- Player/            # First-person movement and camera controls
-    |-- Waves/             # Enemy spawning and wave progression
-    `-- World/             # Explosive and destructible world objects
+├── Art/
+├── Audio/
+├── Materials/
+├── Prefabs/
+├── Scenes/
+│   └── Arena.unity
+├── ScriptableObjects/
+├── Scripts/
+│   ├── Combat/
+│   ├── Core/
+│   ├── Enemies/
+│   ├── Interaction/
+│   ├── Player/
+│   ├── UI/
+│   ├── Waves/
+│   └── World/
+└── Settings/
 ```
-
-## Controls
-
-|Action|Keyboard and Mouse|
-|-|-|
-|Move|`W`, `A`, `S`, `D`|
-|Look|Mouse|
-|Sprint|`Left Shift`|
-|Jump|`Space`|
-|Fire|`Left Mouse Button`|
-|Reload|`R`|
-|Interact / pick up / drop|`E`|
-|Throw carried object|`Q`|
-|Throw grenade|`G`|
-
-## Built With
-
-* Unity `6000.5.5f1`
-* C#
-* Universal Render Pipeline `17.5.0`
-* Unity Input System `1.19.0`
-* AI Navigation `2.0.14`
-* Visual Studio
-* Git and GitHub
-
-## Getting Started
-
-### Requirements
-
-* Unity Hub
-* Unity Editor `6000.5.5f1`
-* Git
-
-### Run the Project
-
-1. Clone the repository:
-
-```bash
-   git clone https://github.com/TravTheDev/SalvageProto.git
-   ```
-
-2. Add the cloned folder as a project in Unity Hub.
-3. Open the project with Unity `6000.5.5f1`.
-4. Open `Assets/Scenes/Arena.unity`.
-5. Enter Play Mode.
-
-Unity will restore the required packages from `Packages/manifest.json` when the project is opened.
 
 ## Current Development Focus
 
-* Completing the player HUD and combat feedback
-* Refining aiming, weapon behavior, and moment-to-moment responsiveness
-* Expanding enemy and wave variety
-* Improving visual and audio presentation
-* Preparing a downloadable gameplay build and demonstration video
+The core gameplay loop is now playable from start to finish.
 
-## What This Project Demonstrates
+Current development is focused on:
 
-Salvage Protocol is intended as a gameplay-programming portfolio project. It demonstrates my experience with C#, Unity, object-oriented programming, interfaces, events, ScriptableObjects, state-based AI, physics interactions, reusable gameplay utilities, and iterative debugging.
+* Environment art
+* Materials and lighting
+* Visual combat feedback
+* Audio
+* UI polish
+* Gameplay balancing
+* Additional testing and bug fixing
+* Portfolio presentation and gameplay footage
 
-## Developer
+## Development Goals
 
-**Travis Byers** - Junior Gameplay Programmer
+Salvage Protocol is being developed as both a playable prototype and a portfolio project focused on strengthening my experience with:
 
-* [GitHub](https://github.com/TravTheDev)
-* [LinkedIn](https://www.linkedin.com/in/travis-dev)
+* C#
+* Unity
+* Gameplay programming
+* Object-oriented design
+* Component-based architecture
+* Event-driven programming
+* AI systems
+* Physics systems
+* Level design
+* Debugging and iterative development
+
+## Engine
+
+**Unity 6.5 — Universal Render Pipeline**
+
+## Author
+
+**Travis Byers**
+
+C# / C++ developer focused on software, gameplay systems, tools, and interactive applications.
 

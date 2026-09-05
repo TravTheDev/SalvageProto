@@ -17,8 +17,16 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform target;
 
     [Header("Detection")]
-    [SerializeField] private float detectionRange = 15f;
-    [SerializeField] private float loseTargetRange = 20f;
+    [SerializeField] private float detectionRange = 50f;
+    [SerializeField] private float loseTargetRange = 60f;
+
+    private void OnValidate()
+    {
+        if (loseTargetRange < detectionRange)
+        {
+            loseTargetRange = detectionRange;
+        }
+    }
 
     [Header("Attack")]
     [SerializeField] private MonoBehaviour attackBehaviour;
@@ -26,7 +34,6 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     private Health health;
     private IEnemyAttack attack;
-
     private EnemyState currentState = EnemyState.Idle;
 
     private void Awake()

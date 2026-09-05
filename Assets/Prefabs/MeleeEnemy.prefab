@@ -109,8 +109,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   target: {fileID: 0}
-  detectionRange: 40
-  loseTargetRange: 20
+  detectionRange: 50
+  loseTargetRange: 60
   attackBehaviour: {fileID: 8348747695734617888}
 --- !u!114 &8348747695734617888
 MonoBehaviour:
