@@ -12,10 +12,32 @@ Survive increasingly difficult waves of enemies while using firearms, grenades, 
 
 The combat space is designed around movement, enemy pathing, choke points, environmental hazards, and multiple routes through a compact industrial salvage facility.
 
-![Salvage Protocol gameplay](SalvageProtoScreenshots/SalvageProtoArena.png)
-![Salvage Protocol gameplay](SalvageProtoScreenshots/SalvageProtoDefeat.png)
-![Salvage Protocol gameplay](SalvageProtoScreenshots/SalvageProtoFirstPerson.png)
-![Salvage Protocol gameplay](SalvageProtoScreenshots/SalvageProtoVictory.png)
+
+## Screenshots
+
+### Arena Overview
+
+The combat arena was built using a graybox approach,
+with a focus on player movement, enemy navigation,
+and environmental interactions.
+
+![Arena Overview](SalvageProtoScreenshots/SalvageProtoArena.png)
+
+### First-Person Gameplay
+
+The player HUD displays health, ammunition, grenades,
+enemy counts, and wave progression.
+
+![First-Person View](SalvageProtoScreenshots/SalvageProtoFirstPerson.png)
+
+### Victory and Defeat States
+
+The prototype includes complete victory and defeat
+conditions, with options to restart or quit.
+
+| Victory | Defeat |
+|---|---|
+| ![Victory](SalvageProtoScreenshots/SalvageProtoVictory.png) | ![Defeat](SalvageProtoScreenshots/SalvageProtoDefeat.png) |
 
 
 ## Current Features
